@@ -250,9 +250,7 @@ export default {
       return this.editedIndex === -1 ? 'Додати Мережу' : 'Edit Item'
     }
   },
-  updated() {
-    // console.log(this.selectedFrequency)
-  },
+
   watch: {
     dialog(val) {
       val || this.close()
@@ -279,7 +277,6 @@ export default {
       }
     },
     updateAlias(val) {
-      console.log('dsds')
       if (val) {
         this.selectedAlias = val
       }
@@ -407,10 +404,5 @@ export default {
 <style scoped>
 .wrap-table {
   padding: 24px;
-}
-
-.select {
-  margin-top: 24px;
-  margin-left: 8px;
 }
 </style>
