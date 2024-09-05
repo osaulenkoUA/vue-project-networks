@@ -22,6 +22,7 @@
             <add-network-button :props="props" />
             <v-spacer></v-spacer>
           </template>
+
           <v-card>
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
@@ -120,8 +121,9 @@
         <selects-component
           :itemsSelectAlias="itemsSelectAlias"
           :itemsSelectFrequency="itemsSelectFrequency"
-          @update:selectedFrequency="updateFrequency"
+          @update:modelValue="updateFrequency"
           @update:selectedAlias="updateAlias"
+          v-model="selectedFrequency"
         />
         <v-spacer></v-spacer>
         <search-field
@@ -171,7 +173,7 @@ export default {
     search: '',
     itemsSelectAlias: [],
     itemsSelectFrequency: [],
-    selectedFrequency: null,
+    selectedFrequency: '',
     selectedAlias: null,
     dialog: false,
     dialogDelete: false,
