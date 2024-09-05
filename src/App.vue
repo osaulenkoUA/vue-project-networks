@@ -119,11 +119,18 @@
           </v-card>
         </v-dialog>
         <selects-component
-          :itemsSelectAlias="itemsSelectAlias"
-          :itemsSelectFrequency="itemsSelectFrequency"
+          :name="'frequency'"
+          label="Частоти"
+          :itemsSelect="itemsSelectFrequency"
           @update:modelValue="updateFrequency"
-          @update:selectedAlias="updateAlias"
           v-model="selectedFrequency"
+        />
+        <selects-component
+          :name="'alias'"
+          label="Позивні"
+          :itemsSelect="itemsSelectAlias"
+          @update:modelValue="updateAlias"
+          v-model="selectedAlias"
         />
         <v-spacer></v-spacer>
         <search-field
