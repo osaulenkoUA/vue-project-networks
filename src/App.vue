@@ -18,46 +18,10 @@
           v-model="dialog"
           max-width="500px"
         >
-          <template v-slot:activator="{ props }">
-            <v-btn
-              class="mb-2"
-              color="primary"
-              dark
-              v-bind="props"
-            >
-              Додати Мережу
-            </v-btn>
+          <template #activator="{ props }">
+            <add-network-button :props="props" />
             <v-spacer></v-spacer>
-            <v-select
-              class="select"
-              :items="itemsSelectAlias"
-              selectedAlias
-              v-model="selectedAlias"
-              density="compact"
-              label="Позивні"
-            ></v-select>
-            <v-select
-              class="select"
-              clearable
-              v-model="selectedFrequency"
-              :items="itemsSelectFrequency"
-              density="compact"
-              label="Частоти"
-            ></v-select>
-            <v-spacer></v-spacer>
-            <v-text-field
-              v-model="search"
-              density="compact"
-              label="Search"
-              prepend-inner-icon="mdi-magnify"
-              variant="solo-filled"
-              flat
-              hide-details
-              single-line
-              @input="onHandleInputSearch"
-            ></v-text-field>
           </template>
-
           <v-card>
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
@@ -153,7 +117,16 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-
+        <selects-component
+          :itemsSelectAlias="itemsSelectAlias"
+          :itemsSelectFrequency="itemsSelectFrequency"
+          @update:selectedFrequency="updateFrequency"
+          @update:selectedAlias="updateAlias"
+        />
+        <v-spacer></v-spacer>
+        <search-field
+          @searching="onHandleInputSearch"
+        ></search-field>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5">Ви точно впевнені у видаленні?</v-card-title>
@@ -188,8 +161,12 @@
 <script>
 import axios from 'axios'
 import { tableColumn } from './helpers/column.ts'
+import AddNetworkButton from '@/components/AddNetworkButton.vue'
+import SelectsComponent from '@/components/SelectsComponent.vue'
+import SearchField from '@/components/SearchField.vue'
 
 export default {
+  components: { SearchField, SelectsComponent, AddNetworkButton },
   data: () => ({
     search: '',
     itemsSelectAlias: [],
@@ -264,7 +241,9 @@ export default {
       return this.editedIndex === -1 ? 'Додати Мережу' : 'Edit Item'
     }
   },
-
+  updated() {
+    // console.log(this.selectedFrequency)
+  },
   watch: {
     dialog(val) {
       val || this.close()
@@ -285,9 +264,18 @@ export default {
   },
 
   methods: {
-
-    onHandleInputSearch(e) {
-      const { value } = e.target
+    updateFrequency(val) {
+      if (val) {
+        this.selectedFrequency = val
+      }
+    },
+    updateAlias(val) {
+      console.log('dsds')
+      if (val) {
+        this.selectedAlias = val
+      }
+    },
+    onHandleInputSearch(value) {
       this.networks = this.networksForSearch.filter(f => f.name.toLowerCase().includes(value.toLowerCase()))
     },
 
@@ -411,7 +399,8 @@ export default {
 .wrap-table {
   padding: 24px;
 }
-.select{
+
+.select {
   margin-top: 24px;
   margin-left: 8px;
 }
