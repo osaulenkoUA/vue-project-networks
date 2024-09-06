@@ -135,7 +135,8 @@
         <v-spacer></v-spacer>
         <search-field
           @searching="onHandleInputSearch"
-        ></search-field>
+          v-model="search"
+         ></search-field>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5">Ви точно впевнені у видаленні?</v-card-title>

@@ -1,5 +1,4 @@
 <template>
-
   <v-btn
     class="mb-2"
     color="primary"
@@ -8,17 +7,10 @@
   >
     Додати Мережу
   </v-btn>
-
-
 </template>
 
-<script>
-export default {
-  name:'AddNetworkButton',
-  props: {
-    props: Object
-  },
- }
-
-
+<script setup lang="ts">
+const { props } = defineProps<{
+  props: Object
+}>()
 </script>

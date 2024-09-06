@@ -6,27 +6,22 @@
     density="compact"
     :items="itemsSelect"
     :label="label"
-    :value="modelValue"
     @update:modelValue="onChange"
     :name="name"
   ></v-select>
 </template>
 
-<script>
-export default {
+<script setup lang="ts">
+const emit = defineEmits(['update:modelValue'])
 
-  emits: ['update:modelValue'],
-  props: {
-    modelValue: String,
-    itemsSelect: Array,
-    name: String,
-    label: String
-  },
-  methods: {
-    onChange(value) {
-      this.$emit('update:modelValue', value)
-    }
-  }
+const { name, label, itemsSelect } = defineProps<{
+  name: string
+  label: string
+  itemsSelect: Array<string>
+}>()
+
+function onChange(value: string | null) {
+  emit('update:modelValue', value)
 }
 </script>
 

@@ -1,6 +1,5 @@
 <template>
   <v-text-field
-    v-model="search"
     density="compact"
     label="Search"
     prepend-inner-icon="mdi-magnify"
@@ -12,17 +11,11 @@
   ></v-text-field>
 </template>
 
-<script lang="ts">
-export default {
-  data: () => ({
-    search: ''
-  }),
-  methods: {
-    onHandleInputSearch() {
-      this.$emit('searching', this.search)
+<script setup lang="ts">
+const emit = defineEmits(['searching'])
+function onHandleInputSearch  (e:any) {
+      emit('searching',e.target.value)
     }
-  }
-}
 </script>
 <style scoped>
 
